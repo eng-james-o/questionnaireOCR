@@ -29,7 +29,7 @@ brew install tesseract
 
 #### On Linux
 
-```
+```bash
 sudo apt update
 sudo apt install tesseract-ocr
 sudo apt install libtesseract-dev
@@ -243,4 +243,4 @@ docker run -p 5000:5000 questionnaire-scanner-backend
 expo build:android  # or expo build:ios
 ```
 
-2. Follow Expo documentation for publishing to app stores
+2. Follow Expo documentation for publishing to app stores.
