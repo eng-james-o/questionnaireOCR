@@ -17,7 +17,7 @@ This guide will walk you through setting up the Questionnaire Scanner applicatio
 
 #### On Windows
 
-- Download and install from: https://github.com/UB-Mannheim/tesseract/wiki
+- Download and install from: [Tesseract - Github](https://github.com/UB-Mannheim/tesseract/wiki)
 - Add the Tesseract installation directory to your PATH
 
 #### On MacOS
@@ -50,13 +50,45 @@ source venv/bin/activate
 pip install -r requirements.txt
 ```
 
-### 3. Start the Backend Server
+### 3. Configure the Django Secret Key
+
+The Django application requires a secret key for cryptographic operations. To securely store the key:
+
+#### On Windows
+
+1. Open Command Prompt or PowerShell.
+2. Run the following command to set the environment variable:
+
+   ```cmd
+   setx DJANGO_SECRET_KEY "your-actual-secret-key"
+   ```
+
+   or in PowerShell:
+
+   ```powershell
+   [Environment]::SetEnvironmentVariable("DJANGO_SECRET_KEY", "your-actual-secret-key", "User")
+   ```
+
+3. Restart your Command Prompt or PowerShell to apply the changes.
+
+#### On Linux
+
+1. Open a terminal.
+2. Add the following line to your `~/.bashrc` or `~/.zshrc` file:
+
+   ```bash
+   export DJANGO_SECRET_KEY="your-actual-secret-key"
+   ```
+
+3. Run `source ~/.bashrc` or `source ~/.zshrc` to apply the changes.
+
+### 4. Start the Backend Server
 
 ```bash
 python manage.py runserver
 ```
 
-The server will start on http://localhost:8000
+The server will start on [http://localhost:8000](http://localhost:8000)
 
 ## Frontend Setup
 
@@ -74,7 +106,7 @@ npm install
 npm start
 ```
 
-The app will start on http://localhost:3000
+The app will start on [http://localhost:3000](http://localhost:3000)
 
 ## Using the App
 
@@ -86,8 +118,8 @@ The app will start on http://localhost:3000
 ## Troubleshooting
 
 - **OCR Not Working Well**: Ensure Tesseract OCR is installed and accessible.
-- **Connection Errors**: Verify the backend server is running and accessible at http://localhost:8000.
-- **Frontend Issues**: Ensure the React development server is running at http://localhost:3000.
+- **Connection Errors**: Verify the backend server is running and accessible at [http://localhost:8000](http://localhost:8000).
+- **Frontend Issues**: Ensure the React development server is running at [http://localhost:3000](http://localhost:3000).
 
 ## Deployment
 
@@ -117,7 +149,7 @@ EXPOSE 8000
 CMD ["python", "manage.py", "runserver", "0.0.0.0:8000"]
 ```
 
-2. Build and run the Docker image:
+1. Build and run the Docker image:
 
 ```bash
 docker build -t questionnaire-scanner-backend .
@@ -132,4 +164,4 @@ docker run -p 8000:8000 questionnaire-scanner-backend
 npm run build
 ```
 
-2. Serve the `build` folder using a static file server or integrate it with the Django backend.
+1. Serve the `build` folder using a static file server or integrate it with the Django backend.
