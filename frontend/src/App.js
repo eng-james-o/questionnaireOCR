@@ -7,29 +7,36 @@ const BACKEND_API = 'http://localhost:8000';
 export default function App() {
   console.log('App component rendered');
 
-  const [selectedImage, setSelectedImage] = useState(null);
+  const [selectedImages, setSelectedImages] = useState([]);
   const [results, setResults] = useState(null);
   const [processing, setProcessing] = useState(false);
 
   const handleImageUpload = (event) => {
-    const file = event.target.files[0];
-    if (file) {
-      const reader = new FileReader();
-      reader.onloadend = () => {
-        setSelectedImage(reader.result);
-      };
-      reader.readAsDataURL(file);
+    const files = Array.from(event.target.files);
+    const newImages = [];
+    let completedReads = 0;
+
+    files.forEach((file) => {
+      const reader = new FileReader();      
+      reader.onloadend = () => {        
+        newImages.push(reader.result);
+        completedReads++;
+        if (completedReads === files.length) {
+          setSelectedImages(newImages);
+        }
+      };    
+      reader.readAsDataURL(file);    
+    });
     }
-  };
 
   const processImage = async () => {
-    if (!selectedImage) return;
+    if (!selectedImages || selectedImages.length === 0) return;
 
     setProcessing(true);
     try {
-      const response = await axios.post(`${BACKEND_API}/process-image/`, {
-        image: selectedImage.split(',')[1], // Remove the base64 prefix
-      });
+      const response = await axios.post(`${BACKEND_API}/process-image/`, {images: selectedImages.map(image => image.split(',')[1]),},
+      
+      );
 
       setResults(response.data);
       alert('Data extracted successfully!');
@@ -70,11 +77,13 @@ export default function App() {
     <div className="App">
       <h1>Questionnaire Scanner</h1>
 
-      <input type="file" accept="image/*" onChange={handleImageUpload} />
+      <input type="file" accept="image/*" multiple onChange={handleImageUpload} />
 
-      {selectedImage && (
-        <div className="image-container">
-          <img src={selectedImage} alt="Selected" />
+      {selectedImages.length > 0 && (
+        <div className="images-container">
+          {selectedImages.map((image, index) => (
+            <img key={index} src={image} alt={`Selected ${index}`} />
+          ))}
         </div>
       )}
 
