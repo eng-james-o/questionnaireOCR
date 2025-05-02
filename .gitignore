@@ -1,4 +1,7 @@
-# Ignore virtual environment folder
+diff
+--- a/.gitignore
++++ b/.gitignore
+@@ -0,0 +1,1 @@
++.venv/
+.venv/
 venv/
-.idx
-.vscode
