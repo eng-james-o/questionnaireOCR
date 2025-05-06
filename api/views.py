@@ -29,31 +29,49 @@ def process_image(request):
             return Response({"error": "No image provided"}, status=400)
 
         # Decode base64 image
-        image_data = base64.b64decode(data['image'])
-        nparr = np.frombuffer(image_data, np.uint8)
-        image = cv2.imdecode(nparr, cv2.IMREAD_COLOR)
+        try:
+            image_data = base64.b64decode(data['image'])
+            nparr = np.frombuffer(image_data, np.uint8)
+            image = cv2.imdecode(nparr, cv2.IMREAD_COLOR)
+        except Exception as e:
+            print(f"Error decoding base64 image: {e}")
+            return Response({"error": f"Image decoding failed: {e}"}, status=400)
 
         if image is None:
             return Response({"error": "Invalid image data"}, status=400)
 
         # Preprocess the image
-        processed_image = preprocess_image(image)
+        try:
+            processed_image = preprocess_image(image)
+        except Exception as e:
+            print(f"Image preprocessing error: {e}")
+            return Response({"error": f"Image preprocessing failed: {e}"}, status=500)
 
         # Try to identify a template
-        template_id, confidence = template_recognizer.identify_template(processed_image)
+        try:
+            template_id, confidence = template_recognizer.identify_template(processed_image)
+            print(f"Identified template ID: {template_id} with confidence: {confidence}")
+        except Exception as e:
+            print(f"Template recognition error: {e}")
+            return Response({"error": f"Template recognition failed: {e}"}, status=500)
 
         # Extract data
-        if template_id and confidence > 0.6:
-            form_data = template_recognizer.extract_data_from_template(processed_image, template_id)
-            form_data['_template_id'] = template_id
-            form_data['_confidence'] = confidence
-        else:
-            fields = form_detector.detect_fields(processed_image)
-            form_data = extract_data_from_fields(processed_image, fields)
+        try:
+            if template_id and confidence > 0.6:
+                form_data = template_recognizer.extract_data_from_template(processed_image, template_id)
+                form_data['_template_id'] = template_id
+                form_data['_confidence'] = confidence
+            else:
+                fields = form_detector.detect_fields(processed_image)
+                form_data = extract_data_from_fields(processed_image, fields)
+        except Exception as e:
+            print(f"Data extraction error: {e}")
+            return Response({"error": f"Data extraction failed: {e}"}, status=500)
 
         return Response(form_data)
 
     except Exception as e:
+        print(f"Unexpected error: {e}")
         return Response({"error": str(e)}, status=500)
 
 @api_view(['POST'])

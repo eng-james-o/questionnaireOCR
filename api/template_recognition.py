@@ -5,6 +5,8 @@ import numpy as np
 from typing import Dict, List, Any, Optional, Tuple
 import pytesseract
 
+pytesseract.pytesseract.tesseract_cmd = 'C:\\Program Files\\Tesseract-OCR\\tesseract.exe'
+
 class TemplateManager:
     """Manages form templates for efficient recognition"""
     
