@@ -25,6 +25,7 @@ def process_image(request):
     """Process an image and extract form data"""
     try:
         data = request.data
+        # print("Received data:", request.data)
         if 'image' not in data:
             return Response({"error": "No image provided"}, status=400)
 

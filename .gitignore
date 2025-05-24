@@ -1,7 +1,10 @@
-diff
---- a/.gitignore
-+++ b/.gitignore
-@@ -0,0 +1,1 @@
-+.venv/
+# Virtual environments
 .venv/
 venv/
+
+# Firebase studio config
+.idx/
+*.nix
+
+# VS Code config
+.vscode/
