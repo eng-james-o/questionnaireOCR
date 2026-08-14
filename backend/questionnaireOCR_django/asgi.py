@@ -8,6 +8,14 @@ https://docs.djangoproject.com/en/5.2/howto/deployment/asgi/
 """
 
 import os
+import sys
+
+# Add grandparent directory (project root) to sys.path so we can import 'app'
+current_dir = os.path.dirname(os.path.abspath(__file__))
+parent_dir = os.path.dirname(current_dir)
+grandparent_dir = os.path.dirname(parent_dir)
+if grandparent_dir not in sys.path:
+    sys.path.insert(0, grandparent_dir)
 
 from django.core.asgi import get_asgi_application
 

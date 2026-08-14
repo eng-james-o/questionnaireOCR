@@ -5,7 +5,9 @@ import numpy as np
 from typing import Dict, List, Any, Optional, Tuple
 import pytesseract
 
-pytesseract.pytesseract.tesseract_cmd = 'C:\\Program Files\\Tesseract-OCR\\tesseract.exe'
+# Set Windows-specific tesseract path conditionally
+if os.name == 'nt' and os.path.exists('C:\\Program Files\\Tesseract-OCR\\tesseract.exe'):
+    pytesseract.pytesseract.tesseract_cmd = 'C:\\Program Files\\Tesseract-OCR\\tesseract.exe'
 
 class TemplateManager:
     """Manages form templates for efficient recognition"""
