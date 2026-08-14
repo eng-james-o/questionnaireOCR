@@ -1,41 +1,41 @@
 # Analysis Suggestion Engine Specification
 
-The **Analysis Suggestion Engine** is an intelligent subsystem within QuestionnaireOCR designed to bridge data collection and statistical analysis. By parsing research goals, objectives, and research questions alongside extracted questionnaire data schema, the engine automatically recommends appropriate statistical and machine learning methodologies.
+The Analysis Suggestion Engine is an intelligent subsystem within QuestionnaireOCR designed to bridge data collection and statistical analysis. By parsing research goals, objectives, and research questions alongside extracted questionnaire data schema, the engine automatically recommends appropriate statistical and machine learning methodologies.
 
 ---
 
-## 🏛 Architecture & Key Components
+## Architecture & Key Components
 
 ```
- ┌───────────────────────────┐      ┌───────────────────────────┐
- │ Project Title &           │      │ Extracted Questionnaire   │
- │ Objectives / Questions    │      │ Data & Column Schemas     │
- └─────────────┬─────────────┘      └─────────────┬─────────────┘
-               │                                  │
-               ▼                                  ▼
- ┌───────────────────────────┐      ┌───────────────────────────┐
- │  NLU Processing Module    │      │ Data Variable Profiler    │
- │  (Intent & Scope Parsing) │      │ (Scale, Distribution, N)  │
- └─────────────┬─────────────┘      └─────────────┬─────────────┘
-               │                                  │
-               └────────────────┬─────────────────┘
-                                │
-                                ▼
-               ┌─────────────────────────────────┐
-               │     Goal Taxonomy Engine        │
-               │   (Knowledge Base Matching)     │
-               └────────────────┬────────────────┘
-                                │
-                                ▼
-               ┌─────────────────────────────────┐
-               │    Automated Recommendation     │
-               │     & Report Generator          │
-               └─────────────────────────────────┘
+ +---------------------------+      +---------------------------+
+ | Project Title &           |      | Extracted Questionnaire   |
+ | Objectives / Questions    |      | Data & Column Schemas     |
+ +-------------+-------------+      +-------------+-------------+
+               |                                  |
+               v                                  v
+ +---------------------------+      +---------------------------+
+ |  NLU Processing Module    |      | Data Variable Profiler    |
+ |  (Intent & Scope Parsing) |      | (Scale, Distribution, N)  |
+ +-------------+-------------+      +-------------+-------------+
+               |                                  |
+               +----------------+-----------------+
+                                |
+                                v
+               +----------------------------------+
+               |     Goal Taxonomy Engine         |
+               |   (Knowledge Base Matching)      |
+               +----------------+-----------------+
+                                |
+                                v
+               +----------------------------------+
+               |    Automated Recommendation      |
+               |     & Report Generator           |
+               +----------------------------------+
 ```
 
 ---
 
-## 💡 Core Features
+## Core Features
 
 ### 1. Goal Taxonomy Knowledge Base
 Maintains a structured, extensible taxonomy mapping domain-specific research objectives to analytical techniques:
@@ -60,6 +60,6 @@ Analyzes user inputs (Project Title, Research Objectives, Research Questions):
 
 ### 3. Automated Recommendations System
 Generates tailored, actionable analytical recommendations:
-* **Technique Suitability Scoring**: Ranks statistical tests based on variable measurement scales (Nominal, Ordinal, Interval, Ratio) and sample size ($N$).
+* **Technique Suitability Scoring**: Ranks statistical tests based on variable measurement scales (Nominal, Ordinal, Interval, Ratio) and sample size (N).
 * **Assumption Checks Guidance**: Warns about underlying assumptions (e.g., normality testing, homoscedasticity) before applying parametric models.
 * **Actionable Analytical Plan**: Generates a step-by-step report guiding the researcher on how to execute suggested tests in Python/R/SPSS to directly answer their research questions.

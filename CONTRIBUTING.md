@@ -1,10 +1,10 @@
 # Contributing to QuestionnaireOCR
 
-Thank you for your interest in contributing to **QuestionnaireOCR**! We welcome contributions from developers, researchers, and open-source enthusiasts.
+Thank you for your interest in contributing to QuestionnaireOCR! We welcome contributions from developers, researchers, and open-source enthusiasts.
 
 ---
 
-## 🚀 How to Get Started
+## How to Get Started
 
 1. **Fork the Repository**: Create your own copy of the project on GitHub.
 2. **Clone the Project**:
@@ -19,7 +19,7 @@ Thank you for your interest in contributing to **QuestionnaireOCR**! We welcome 
 
 ---
 
-## 🛠 Code Structure Guidelines
+## Code Structure Guidelines
 
 * **`app/`**: Framework-agnostic core logic. Any image processing, OCR, or statistical suggestion algorithms belong here. Do not introduce Django or UI-specific dependencies inside `app/`.
 * **`backend/`**: Django REST framework API endpoints and serializers wrapping `app/` features.
@@ -29,7 +29,7 @@ Thank you for your interest in contributing to **QuestionnaireOCR**! We welcome 
 
 ---
 
-## 🧪 Testing Guidelines
+## Testing Guidelines
 
 Before submitting code, always run the backend test suite to verify no regressions were introduced:
 
@@ -41,7 +41,7 @@ Ensure all unit tests pass cleanly before creating a Pull Request.
 
 ---
 
-## 📝 Submitting Pull Requests
+## Submitting Pull Requests
 
 1. Create a descriptive feature branch (`git checkout -b feature/amazing-feature`).
 2. Commit your changes with concise, informative commit messages.

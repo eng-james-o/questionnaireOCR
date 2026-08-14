@@ -1,10 +1,10 @@
 # QuestionnaireOCR Project - Status & To-Do List
 
-This document outlines the current state of development for the **QuestionnaireOCR** application and details the remaining steps required to fully realize the goals of the project as described in the README and documentation.
+This document outlines the current state of development for the QuestionnaireOCR application and details the remaining steps required to fully realize the goals of the project as described in the README and documentation.
 
 ---
 
-## 📊 Project Status & Accomplishments
+## Project Status & Accomplishments
 
 ### 1. Unified Modular Directory Structure
 - **`app/`**: Shared framework-agnostic Python package for core image processing, form field detection, template recognition, and OCR preprocessing.
@@ -32,7 +32,7 @@ This document outlines the current state of development for the **QuestionnaireO
 
 ---
 
-## 🚀 Remaining Steps & Future Roadmap
+## Remaining Steps & Future Roadmap
 
 ### Phase 1: Unfilled Schema Learning & Intermediate Review Interface
 - [ ] **Blank Form Schema Extractor**:
