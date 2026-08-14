@@ -1,63 +1,64 @@
 # QuestionnaireOCR Project - Status & To-Do List
 
-This document outlines the current state of development for the **QuestionnaireOCR** application and details the remaining steps required to fully realize the goals of the project as described in the README.
+This document outlines the current state of development for the **QuestionnaireOCR** application and details the remaining steps required to fully realize the goals of the project as described in the README and documentation.
 
 ---
 
-## 📊 Project Status: Architecture & Accomplishments
-
-The project has been successfully restructured into a clean, modern, and modular architecture. Core image processing and OCR logic has been decoupled from application frameworks, allowing simultaneous reuse in both web and desktop environments.
+## 📊 Project Status & Accomplishments
 
 ### 1. Unified Modular Directory Structure
-- **`app/`**: Contain core business, image-processing, and OCR logics (completely decoupled from web/desktop frameworks).
-- **`backend/`**: Python Django REST API backend acting as the web-service wrapper.
+- **`app/`**: Shared framework-agnostic Python package for core image processing, form field detection, template recognition, and OCR preprocessing.
+- **`backend/`**: Django REST API backend acting as the web service wrapper.
 - **`frontend/`**: React web application communicating with the Django backend.
 - **`desktop/`**: Self-contained PySide6 QML desktop application utilizing the `app/` core logics directly for offline usage.
+- **`documentation/`**: Comprehensive guides for the Questionnaire Workflow and Analysis Suggestion Engine.
 
-### 2. Accomplished Work & Features
+### 2. Accomplished Core Features
 - [x] **Core Business Logic (`app/`)**:
-  - **Form Field Detection (`app/form_field_detector.py`)**: Detects lines, filters contours, analyzes aspect ratios, classifies shapes (checkboxes, radio buttons, text fields), and groups label text with inputs vertically/horizontally.
-  - **Template-Based Matching (`app/template_recognition.py`)**: Extracts SIFT descriptors, matches templates via FLANN matcher, and falls back to text keyword matching via PyTesseract.
-  - **OCR Preprocessing (`app/processing.py`)**: Converts to grayscale, applies fast NlMeans denoising, adaptive thresholding, and dilation to maximize OCR accuracy.
+  - **Form Field Detection (`app/form_field_detector.py`)**: Detects lines, contours, checkboxes, radio buttons, and text input regions.
+  - **Template-Based Matching (`app/template_recognition.py`)**: SIFT feature extraction, FLANN matcher, and keyword text matching.
+  - **OCR Preprocessing (`app/processing.py`)**: Denoising, thresholding, and morphological operations.
 - [x] **Django Backend (`backend/`)**:
-  - Exposes RESTful endpoints for image processing (`/process-image/`), Excel exporting (`/export-excel/`), and template CRUD operations (`/create-template/`, `/templates/`).
-  - Added robust Django unit tests (`backend/api/tests.py`) using a mocked PyTesseract pipeline to make tests deterministic and system-independent.
+  - Exposes RESTful endpoints for image processing, template CRUD operations, and Excel exporting.
+  - Unit tests with `unittest.mock` for `pytesseract` to ensure system-independent execution.
 - [x] **React Frontend (`frontend/`)**:
-  - Responsive single-page application for uploading/previewing multiple images.
-  - Connects to the backend via Axios to extract data and triggers Excel downloads.
+  - Responsive single-page application for uploading/previewing multiple images and downloading Excel exports.
 - [x] **PySide6 Desktop App (`desktop/`)**:
-  - Implements a modern native UI using Qt Quick (QML) and PySide6.
-  - Connects directly to the `app/` package for instant, local OCR and template extraction.
+  - Native UI built with Qt Quick (QML) and PySide6 connected directly to `app/`.
+- [x] **Comprehensive Documentation (`documentation/`)**:
+  - End-to-end Questionnaire Workflow specification (`documentation/WORKFLOW.md`).
+  - Analysis Suggestion Engine architecture specification (`documentation/ANALYSIS_SUGGESTION_ENGINE.md`).
+  - Community guidelines (`CONTRIBUTING.md`, `LICENSE`, `CHANGELOG.md`, `PULL_REQUEST_TEMPLATE.md`).
 
 ---
 
 ## 🚀 Remaining Steps & Future Roadmap
 
-To achieve the ultimate goal of a production-ready OCR application that extracts, codes, and structures questionnaire data accurately, the following steps must be completed:
+### Phase 1: Unfilled Schema Learning & Intermediate Review Interface
+- [ ] **Blank Form Schema Extractor**:
+  - Enhance `app/form_field_detector.py` to auto-detect question labels and assign default variable names (`Q1`, `Q2`, etc.) when processing unfilled forms.
+- [ ] **Interactive Schema Review Component**:
+  - Build UI components in React and PySide6 QML to allow researchers to review, rename columns, set coding dictionaries (e.g., `1 = Male`, `2 = Female`), and validate spreadsheet structure before batch scanning.
+- [ ] **Batch Questionnaire Scanner Pipeline**:
+  - Implement sequential batch scanning worker that applies a validated schema to hundreds of filled questionnaire pages, appending each respondent as a row in the master spreadsheet.
 
-### Phase 1: Robust Data Extraction & Advanced OCR
-- [ ] **Handwriting Recognition (HTR)**:
-  - Integrate a handwriting-optimized OCR engine (such as EasyOCR, PaddleOCR, or a custom TrOCR transformer model) for hand-filled text fields since standard Tesseract is optimized for printed text.
-- [ ] **Smart Denoising & Alignment**:
-  - Implement perspective correction and auto-rotation (using OpenCV Hough transform) to fix tilted/skewed scanned pages before processing.
-  - Normalize brightness and contrast automatically for mobile-captured images.
+### Phase 2: Analysis Suggestion Engine Implementation
+- [ ] **Goal Taxonomy Knowledge Base**:
+  - Build a JSON/SQLite statistical rule database mapping research intents (comparison, association, prediction, clustering) to appropriate analytical techniques (t-test, ANOVA, Regression, Factor Analysis, PCA).
+- [ ] **NLU Research Objectives Parser**:
+  - Develop an NLU module (using spaCy / Transformers / Regex intent classification) to parse user project titles, objectives, and research questions into structured query representations.
+- [ ] **Automated Recommendations Generator**:
+  - Implement a recommendation scoring engine that matches parsed research objectives against extracted questionnaire variable types (nominal, ordinal, continuous) and generates step-by-step statistical analysis suggestions.
 
-### Phase 2: Interactive Template Designer
-- [ ] **Visual Template Creator (Web & Desktop)**:
-  - Develop an interactive frontend UI where users can upload a blank questionnaire, drag and draw bounding boxes over input fields, choose field types (text, checkbox, radio button), and save them as reusable templates.
-  - Connect this interface directly to the backend/desktop template managers.
+### Phase 3: Handwriting Recognition & Accuracy Enhancements
+- [ ] **Handwritten Text Recognition (HTR)**:
+  - Integrate EasyOCR or PaddleOCR as fallback options for reading handwritten open-response fields.
+- [ ] **Automatic Deskewing & Alignment**:
+  - Add automatic rotation and perspective alignment using OpenCV Hough lines to handle tilted phone camera captures.
 
-### Phase 3: Data Coding & Tabular Structuring
-- [ ] **Standardized Coding System**:
-  - Implement a mapping dictionary module to "code" raw text results into discrete data values (e.g., mapping unchecked/checked boxes to `0`/`1`, or hand-written gender values `M`/`F` to standard `1`/`2` integer codes).
-- [ ] **Multi-Page Sheet Aggregation**:
-  - Develop logic to stitch together multi-page questionnaires, ensuring all answers from a single respondent are merged into a single database row.
-  - Enhance the Excel exporter to handle batch processing of hundreds of questionnaires into a single spreadsheet.
-
-### Phase 4: Security, Authentication, & Deployment
-- [ ] **Security & Multi-Tenancy**:
-  - Add user login, role-based access control, and user-owned templates inside Django.
-  - Encrypt sensitive questionnaire uploads to maintain privacy of collected survey data.
-- [ ] **Packaging & Native Distribution**:
-  - Create a Docker Compose setup for simple deployment of the Web Frontend & Django Backend.
-  - Bundle the PySide6 QML desktop application into a standalone executable (using `PyInstaller` or `Briefcase`) so users can run it without installing Python or dependencies locally.
+### Phase 4: Packaging & Security
+- [ ] **Authentication & Security**:
+  - Implement JWT user authentication in Django and secure secret key handling.
+- [ ] **Distribution & Containerization**:
+  - Provide Docker Compose configurations for backend/frontend web deployment.
+  - Package the PySide6 QML desktop application into standalone binary executables via PyInstaller or Briefcase.

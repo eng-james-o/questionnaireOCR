@@ -1,40 +1,62 @@
 # QuestionnaireOCR
 
-The goal of the project is to develop an OCR application that extracts information from questionnaires, codes the data, and outputs them in tabular format.
+**QuestionnaireOCR** is an end-to-end optical character recognition and intelligent survey analytics platform. It automatically extracts structured data from paper questionnaires, provides interactive schema validation, scans batch responses, and recommends tailored statistical and machine learning analytical techniques based on user research objectives.
 
-## Features
+---
 
-- Extracts text and data from scanned questionnaires using OCR.
-- Supports template-based recognition for improved accuracy.
-- Detects form fields such as text inputs, checkboxes, and radio buttons.
-- Exports extracted data to Excel format.
-- React frontend for capturing images and displaying results.
-- Python Django backend for processing images and managing templates.
+## 🌟 Key Features
 
-## Stack
+### 📄 Questionnaire Processing Workflow
+- **Unfilled Questionnaire Schema Learning**: Scans blank questionnaire forms to learn field layouts, labels, and data types automatically.
+- **Interactive Schema Review Interface**: Intermediate interface allowing researchers to inspect, rename, adjust data types, and validate spreadsheet column structures before batch scanning.
+- **Batch Scanning of Filled Forms**: Performs template matching, alignment, and high-precision extraction (checkboxes, radio buttons, handwritten text) on filled questionnaires to populate spreadsheets.
+- **Data Export**: Exports extracted survey datasets directly to Microsoft Excel (`.xlsx`) or CSV.
 
-- **Backend**: Python with Django, OpenCV, and Tesseract OCR.
-- **Frontend**: React with Axios for API communication.
+### 🧠 Analysis Suggestion Engine
+- **Goal Taxonomy Knowledge Base**: Matches research objectives to parametric/non-parametric tests, regression models, ANOVA, factor analysis, and machine learning techniques.
+- **Natural Language Understanding (NLU)**: Parses project titles, objectives, and research questions to identify research intent and variable relationships.
+- **Automated Recommendations**: Generates tailored statistical analysis recommendations and step-by-step guidance based on survey data types and study scope.
 
-## Setup Instructions
+---
 
-For detailed setup instructions, refer to the [Setup Guide](setup-instructions.md).
+## 🏗 Modular Architecture
 
-## Usage
+```
+QuestionnaireOCR/
+├── app/            # Shared core business logic (field detection, OCR, preprocessing)
+├── backend/        # Python Django REST API backend
+├── frontend/       # React web frontend
+├── desktop/        # Native PySide6 + QML desktop client
+└── documentation/  # Comprehensive architectural & specification guides
+```
 
-1. Launch the React app to capture or upload images.
-2. Use the app to process images and extract data from forms.
-3. View the extracted data and export it to Excel if needed.
+- **Core Logic (`app/`)**: Framework-agnostic Python package shared across web and desktop platforms.
+- **Django Backend (`backend/`)**: REST API server wrapper exposing OCR processing, template management, and export endpoints.
+- **React Frontend (`frontend/`)**: Modern web application for uploading forms, reviewing schemas, and exporting datasets.
+- **PySide6 Desktop App (`desktop/`)**: Offline, native desktop application built with Qt Quick (QML) and PySide6.
 
-## Contributing
+---
 
-Contributions are welcome! To contribute:
+## 📚 Documentation Links
 
-1. Fork the repository.
-2. Create a new branch for your feature or bug fix.
-3. Commit your changes and push them to your fork.
-4. Submit a pull request with a detailed description of your changes.
+For detailed guides, please refer to:
+- [Questionnaire Workflow Guide](documentation/WORKFLOW.md)
+- [Analysis Suggestion Engine Spec](documentation/ANALYSIS_SUGGESTION_ENGINE.md)
+- [Setup Instructions](setup-instructions.md)
+- [Contributing Guidelines](CONTRIBUTING.md)
+- [Changelog](CHANGELOG.md)
+- [License](LICENSE)
 
-## License
+---
 
-This project is licensed under the MIT License.
+## 🛠 Stack
+
+- **Backend & Core Logic**: Python 3.12+, Django REST Framework, OpenCV, PyTesseract, Pandas, OpenPyXL.
+- **Desktop Client**: PySide6 (Qt 6), Qt Quick (QML).
+- **Web Frontend**: React, Axios, CSS3.
+
+---
+
+## 📜 License
+
+This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
