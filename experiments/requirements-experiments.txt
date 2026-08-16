@@ -1,0 +1,27 @@
+# Core Machine Learning & Tracking
+mlflow>=2.11.0
+jupyter>=1.0.0
+notebook>=7.1.0
+matplotlib>=3.8.0
+pandas>=2.2.0
+numpy>=1.26.0
+scikit-learn>=1.4.0
+
+# Deep Learning Frameworks
+torch>=2.2.0
+torchvision>=0.17.0
+tensorflow>=2.15.0
+
+# LLM & Orchestration Frameworks
+langchain>=0.1.15
+langchain-community>=0.0.32
+langgraph>=0.0.35
+google-generativeai>=0.4.1
+openai>=1.14.0
+
+# OCR & Document Intelligence
+paddlepaddle>=2.6.0
+paddleocr>=2.7.0.3
+pytesseract>=0.3.10
+opencv-python>=4.9.0
+pillow>=10.2.0
